@@ -59,12 +59,14 @@ export type FiledRuleFormatter = (value: any, rule: FieldRule) => string;
 
 export type FieldRule = {
   pattern?: RegExp;
-  trigger?: FieldValidateTrigger;
+  trigger?: FieldValidateTrigger | FieldValidateTrigger[];
   message?: FieldRuleMessage;
   required?: boolean;
   validator?: FieldRuleValidator;
   formatter?: FiledRuleFormatter;
 };
+
+export type FieldValidationStatus = 'passed' | 'failed' | 'unvalidated';
 
 // Shared props of Field and Form
 export type FieldFormSharedProps =
@@ -83,6 +85,7 @@ export type FieldExpose = {
     rules?: FieldRule[] | undefined
   ) => Promise<void | FieldValidateError>;
   resetValidation: () => void;
+  getValidationStatus: () => FieldValidationStatus;
   /** @private */
   formValue: ComputedRef<unknown>;
 };

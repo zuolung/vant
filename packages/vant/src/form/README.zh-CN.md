@@ -123,7 +123,7 @@ export default {
   setup() {
     const value1 = ref('');
     const value2 = ref('');
-    const value3 = ref('');
+    const value3 = ref('abc');
     const value4 = ref('');
     const pattern = /\d{6}/;
 
@@ -140,7 +140,7 @@ export default {
 
         setTimeout(() => {
           Toast.clear();
-          resolve(/\d{6}/.test(val));
+          resolve(val === '1234');
         }, 1000);
       });
 
@@ -332,7 +332,9 @@ import { ref } from 'vue';
 
 export default {
   setup() {
-    const value = ref([{ url: 'https://img.yzcdn.cn/vant/leaf.jpg' }]);
+    const value = ref([
+      { url: 'https://fastly.jsdelivr.net/npm/@vant/assets/leaf.jpeg' },
+    ]);
     return { value };
   },
 };
@@ -527,7 +529,7 @@ export default {
 | label-align | 表单项 label 对齐方式，可选值为 `center` `right` | _string_ | `left` |
 | input-align | 输入框对齐方式，可选值为 `center` `right` | _string_ | `left` |
 | error-message-align | 错误提示文案对齐方式，可选值为 `center` `right` | _string_ | `left` |
-| validate-trigger | 表单校验触发时机，可选值为 `onChange`、`onSubmit`，详见下表 | _string_ | `onBlur` |
+| validate-trigger | 表单校验触发时机，可选值为 `onChange`、`onSubmit`，支持通过数组同时设置多个值，具体用法见下方表格 | _string \| string[]_ | `onBlur` |
 | colon | 是否在 label 后面添加冒号 | _boolean_ | `false` |
 | disabled | 是否禁用表单中的所有输入框 | _boolean_ | `false` |
 | readonly | 是否将表单中的所有输入框设置为只读状态 | _boolean_ | `false` |
@@ -576,8 +578,10 @@ export default {
 | 方法名 | 说明 | 参数 | 返回值 |
 | --- | --- | --- | --- |
 | submit | 提交表单，与点击提交按钮的效果等价 | - | - |
-| validate | 验证表单，支持传入 `name` 来验证单个或部分表单项 | _name?: string \| string[]_ | _Promise_ |
-| resetValidation | 重置表单项的验证提示，支持传入 `name` 来重置单个或部分表单项 | _name?: string \| string[]_ | - |
+| getValues `v3.4.8` | 获取所有表单项当前的值 | - | _Record<string, unknown>_ |
+| validate | 验证表单，支持传入一个或多个 `name` 来验证单个或部分表单项，不传入 `name` 时，会验证所有表单项 | _name?: string \| string[]_ | _Promise\<void\>_ |
+| resetValidation | 重置表单项的验证提示，支持传入一个或多个 `name` 来重置单个或部分表单项，不传入 `name` 时，会重置所有表单项 | _name?: string \| string[]_ | - |
+| getValidationStatus `v3.5.0` | 获取所有表单项的校验状态，状态包括 `passed`、`failed`、`unvalidated` | - | _Record\<string, FieldValidationStatus\>_ |
 | scrollToField | 滚动到对应表单项的位置，默认滚动到顶部，第二个参数传 false 可滚动至底部 | _name: string, alignToTop: boolean_ | - |
 
 ### 类型定义

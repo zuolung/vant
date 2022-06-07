@@ -32,12 +32,12 @@ The easiest way to use Vant is to include a CDN link in the html file, after whi
 <!-- import style -->
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/vant@3/lib/index.css"
+  href="https://fastly.jsdelivr.net/npm/vant@3/lib/index.css"
 />
 
 <!-- import script -->
-<script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
-<script src="https://cdn.jsdelivr.net/npm/vant@3/lib/vant.min.js"></script>
+<script src="https://fastly.jsdelivr.net/npm/vue@3"></script>
+<script src="https://fastly.jsdelivr.net/npm/vant@3/lib/vant.min.js"></script>
 
 <script>
   // Render the Button component
@@ -73,10 +73,10 @@ For enterprise developers, we recommend:
 
 ### CLI
 
-We recommend to use [Vue Cli](https://cli.vuejs.org/) to create a new project.
+We recommend to use [Vue CLI](https://cli.vuejs.org/) to create a new project.
 
 ```bash
-# Install Vue Cli
+# Install Vue CLI
 npm install -g @vue/cli
 
 # Create a project
@@ -86,7 +86,7 @@ vue create hello-world
 vue ui
 ```
 
-![](https://img.yzcdn.cn/vant/vue-cli-demo-201809030812.png)
+![](https://fastly.jsdelivr.net/npm/@vant/assets/vue-cli-demo-201809030812.png)
 
 In the GUI, click on 'Dependencies' -> `Install Dependencies` and add `vant` to the dependencies.
 
@@ -100,13 +100,13 @@ If you are using vite, please use [vite-plugin-style-import](https://github.com/
 
 ```bash
 # with npm
-npm i vite-plugin-style-import -D
+npm i vite-plugin-style-import@1.4.1 -D
 
 # with yarn
-yarn add vite-plugin-style-import -D
+yarn add vite-plugin-style-import@1.4.1 -D
 
 # with pnpm
-pnpm add vite-plugin-style-import -D
+pnpm add vite-plugin-style-import@1.4.1 -D
 ```
 
 #### 2. Configure Plugin

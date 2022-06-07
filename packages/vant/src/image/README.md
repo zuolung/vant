@@ -21,7 +21,11 @@ app.use(VanImage);
 ### Basic Usage
 
 ```html
-<van-image width="100" height="100" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+<van-image
+  width="100"
+  height="100"
+  src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg"
+/>
 ```
 
 ### Fit Mode
@@ -33,7 +37,7 @@ Same as [object-fit](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit
   width="10rem"
   height="10rem"
   fit="contain"
-  src="https://img.yzcdn.cn/vant/cat.jpeg"
+  src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg"
 />
 ```
 
@@ -47,7 +51,7 @@ Same as [object-position](https://developer.mozilla.org/en-US/docs/Web/CSS/objec
   height="10rem"
   fit="cover"
   position="left"
-  src="https://img.yzcdn.cn/vant/cat.jpeg"
+  src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg"
 />
 ```
 
@@ -60,7 +64,7 @@ Show round image, it may not works at `fit=contain` and `fit=scale-down`.
   round
   width="10rem"
   height="10rem"
-  src="https://img.yzcdn.cn/vant/cat.jpeg"
+  src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg"
 />
 ```
 
@@ -71,7 +75,7 @@ Show round image, it may not works at `fit=contain` and `fit=scale-down`.
   width="100"
   height="100"
   lazy-load
-  src="https://img.yzcdn.cn/vant/cat.jpeg"
+  src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg"
 />
 ```
 
@@ -97,7 +101,7 @@ app.use(Lazyload);
 | height | Height | _number \| string_ | - |
 | radius | Border Radius | _number \| string_ | `0` |
 | round | Whether to be round | _boolean_ | `false` |
-| lazy-load | Whether to enable lazy load，should register [Lazyload](#/en-US/lazyload) component | _boolean_ | `false` |
+| lazy-load | Whether to enable lazy load, should register [Lazyload](#/en-US/lazyload) component | _boolean_ | `false` |
 | show-error | Whether to show error placeholder | _boolean_ | `true` |
 | show-loading | Whether to show loading placeholder | _boolean_ | `true` |
 | error-icon | Error icon | _string_ | `photo-fail` |

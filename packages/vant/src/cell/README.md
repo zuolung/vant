@@ -151,11 +151,11 @@ app.use(CellGroup);
 | title | Title | _number \| string_ | - |
 | value | Right text | _number \| string_ | - |
 | label | Description below the title | _string_ | - |
-| size | Size，can be set to `large` | _string_ | - |
+| size | Size, can be set to `large` | _string_ | - |
 | icon | Left Icon | _string_ | - |
 | icon-prefix | Icon className prefix | _string_ | `van-icon` |
 | border | Whether to show inner border | _boolean_ | `true` |
-| center | Whether to center content vertically | _boolean_ | `true` |
+| center | Whether to center content vertically | _boolean_ | `false` |
 | url | Link URL | _string_ | - |
 | to | Target route of the link, same as to of vue-router | _string \| object_ | - |
 | replace | If true, the navigation will not leave a history record | _boolean_ | `false` |

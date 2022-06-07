@@ -6,7 +6,6 @@ import {
   truthProp,
   numericProp,
   preventDefault,
-  makeStringProp,
   createNamespace,
 } from '../utils';
 
@@ -19,6 +18,7 @@ import type {
   FieldTextAlign,
   FieldValidateError,
   FieldValidateTrigger,
+  FieldValidationStatus,
 } from '../field/types';
 import type { FormExpose } from './types';
 
@@ -35,9 +35,14 @@ const formProps = {
   scrollToError: Boolean,
   validateFirst: Boolean,
   submitOnEnter: truthProp,
-  validateTrigger: makeStringProp<FieldValidateTrigger>('onBlur'),
   showErrorMessage: truthProp,
   errorMessageAlign: String as PropType<FieldTextAlign>,
+  validateTrigger: {
+    type: [String, Array] as PropType<
+      FieldValidateTrigger | FieldValidateTrigger[]
+    >,
+    default: 'onBlur',
+  },
 };
 
 export type FormProps = ExtractPropTypes<typeof formProps>;
@@ -137,6 +142,12 @@ export default defineComponent({
       });
     };
 
+    const getValidationStatus = () =>
+      children.reduce<Record<string, FieldValidationStatus>>((form, field) => {
+        form[field.name] = field.getValidationStatus();
+        return form;
+      }, {});
+
     const scrollToField = (
       name: string,
       options?: boolean | ScrollIntoViewOptions
@@ -151,10 +162,10 @@ export default defineComponent({
     };
 
     const getValues = () =>
-      children.reduce((form, field) => {
+      children.reduce<Record<string, unknown>>((form, field) => {
         form[field.name] = field.formValue.value;
         return form;
-      }, {} as Record<string, unknown>);
+      }, {});
 
     const submit = () => {
       const values = getValues();
@@ -179,8 +190,10 @@ export default defineComponent({
     useExpose<FormExpose>({
       submit,
       validate,
+      getValues,
       scrollToField,
       resetValidation,
+      getValidationStatus,
     });
 
     return () => (

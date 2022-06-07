@@ -36,12 +36,12 @@ pnpm add vant
 <!-- 引入样式文件 -->
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/vant@3/lib/index.css"
+  href="https://fastly.jsdelivr.net/npm/vant@3/lib/index.css"
 />
 
 <!-- 引入 Vue 和 Vant 的 JS 文件 -->
-<script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
-<script src="https://cdn.jsdelivr.net/npm/vant@3/lib/vant.min.js"></script>
+<script src="https://fastly.jsdelivr.net/npm/vue@3"></script>
+<script src="https://fastly.jsdelivr.net/npm/vant@3/lib/vant.min.js"></script>
 
 <script>
   // 在 #app 标签下渲染一个按钮组件
@@ -80,11 +80,11 @@ pnpm add vant
 
 ### 示例工程
 
-我们提供了丰富的[示例工程](https://github.com/youzan/vant-demo)，通过示例工程你可以了解如下内容：
+我们提供了丰富的[示例工程](https://github.com/vant-ui/vant-demo)，通过示例工程你可以了解如下内容：
 
 - 基于 Vite 和 Vant 搭建应用
 - 基于 Nuxt 和 Vant 搭建应用
-- 基于 Vue Cli 和 Vant 搭建应用
+- 基于 Vue CLI 和 Vant 搭建应用
 - 配置按需引入组件
 - 配置基于 Rem 的适配方案
 - 配置基于 Viewport 的适配方案
@@ -101,13 +101,13 @@ pnpm add vant
 
 ```bash
 # 通过 npm 安装
-npm i vite-plugin-style-import -D
+npm i vite-plugin-style-import@1.4.1 -D
 
 # 通过 yarn 安装
-yarn add vite-plugin-style-import -D
+yarn add vite-plugin-style-import@1.4.1 -D
 
 # 通过 pnpm 安装
-pnpm add vite-plugin-style-import -D
+pnpm add vite-plugin-style-import@1.4.1 -D
 ```
 
 #### 2. 配置插件

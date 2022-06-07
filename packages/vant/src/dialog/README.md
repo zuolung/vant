@@ -112,7 +112,7 @@ If you need to render vue components within a dialog, you can use dialog compone
 
 ```html
 <van-dialog v-model:show="show" title="Title" show-cancel-button>
-  <img src="https://img.yzcdn.cn/vant/apple-3.jpg" />
+  <img src="https://fastly.jsdelivr.net/npm/@vant/assets/apple-3.jpeg" />
 </van-dialog>
 ```
 
@@ -147,15 +147,17 @@ export default {
 | title | Title | _string_ | - |
 | width | Dialog width | _number \| string_ | `320px` |
 | message | Message | _string \| () => JSX.ELement_ | - |
-| messageAlign | Message text align，can be set to `left` `right` | _string_ | `center` |
-| theme | Theme style，can be set to `round-button` | _string_ | `default` |
+| messageAlign | Message text align, can be set to `left` `right` | _string_ | `center` |
+| theme | Theme style, can be set to `round-button` | _string_ | `default` |
 | className | Custom className | _string \| Array \| object_ | - |
 | showConfirmButton | Whether to show confirm button | _boolean_ | `true` |
 | showCancelButton | Whether to show cancel button | _boolean_ | `false` |
 | cancelButtonText | Cancel button text | _string_ | `Cancel` |
 | cancelButtonColor | Cancel button color | _string_ | `black` |
+| confirmButtonDisabled `v3.5.0` | Whether to disable cancel button | _boolean_ | `false` |
 | confirmButtonText | Confirm button text | _string_ | `Confirm` |
 | confirmButtonColor | Confirm button color | _string_ | `#ee0a24` |
+| confirmButtonDisabled `v3.5.0` | Whether to disable confirm button | _boolean_ | `false` |
 | overlay | Whether to show overlay | _boolean_ | `true` |
 | overlayClass | Custom overlay class | _string \| Array \| object_ | - |
 | overlayStyle | Custom overlay style | _object_ | - |
@@ -175,14 +177,16 @@ export default {
 | title | Title | _string_ | - |
 | width | Width | _number \| string_ | `320px` |
 | message | Message | _string \| () => JSX.ELement_ | - |
-| message-align | Message align，can be set to `left` `right` | _string_ | `center` |
-| theme | Theme style，can be set to `round-button` | _string_ | `default` |
+| message-align | Message align, can be set to `left` `right` | _string_ | `center` |
+| theme | Theme style, can be set to `round-button` | _string_ | `default` |
 | show-confirm-button | Whether to show confirm button | _boolean_ | `true` |
 | show-cancel-button | Whether to show cancel button | _boolean_ | `false` |
 | cancel-button-text | Cancel button text | _string_ | `Cancel` |
 | cancel-button-color | Cancel button color | _string_ | `black` |
+| cancel-button-disabled `v3.5.0` | Whether to disable cancel button | _boolean_ | `false` |
 | confirm-button-text | Confirm button text | _string_ | `Confirm` |
 | confirm-button-color | Confirm button color | _string_ | `#ee0a24` |
+| confirm-button-disabled `v3.5.0` | Whether to disable confirm button | _boolean_ | `false` |
 | overlay | Whether to show overlay | _boolean_ | `true` |
 | overlay-class | Custom overlay class | _string_ | - |
 | overlay-style | Custom overlay style | _object_ | - |

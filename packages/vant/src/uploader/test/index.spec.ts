@@ -1,13 +1,15 @@
 import { nextTick } from 'vue';
-import Uploader, { UploaderFileListItem } from '..';
+import { cdnURL } from '../../../docs/site';
+import Uploader, { type UploaderFileListItem } from '..';
 import { mount, later, triggerDrag } from '../../../test';
+import type { Numeric } from '../../utils';
 
 const mockFileDataUrl = 'data:image/test';
 const mockFile = new File([new ArrayBuffer(10000)], 'test.jpg', {
   type: 'test',
 });
-const IMAGE = 'https://img.yzcdn.cn/vant/cat.jpeg';
-const PDF = 'https://img.yzcdn.cn/vant/test.pdf';
+const IMAGE = cdnURL('cat.jpeg');
+const PDF = cdnURL('test.pdf');
 
 function mockFileReader() {
   function mockReadAsText(this: FileReader) {
@@ -96,14 +98,14 @@ test('set input name', (done) => {
       name: 'uploader',
       beforeRead: (
         file: File | File[],
-        detail: { name: string | number; index: number }
+        detail: { name: Numeric; index: number }
       ) => {
         expect(detail.name).toEqual('uploader');
-        return file;
+        return true;
       },
       afterRead: (
         readFile: UploaderFileListItem | UploaderFileListItem[],
-        detail: { name: string | number; index: number }
+        detail: { name: Numeric; index: number }
       ) => {
         expect(detail.name).toEqual('uploader');
         done();
@@ -293,8 +295,8 @@ test('render preview image', async () => {
   const wrapper = mount(Uploader, {
     props: {
       modelValue: [
-        { url: 'https://img.yzcdn.cn/vant/cat.jpeg' },
-        { url: 'https://img.yzcdn.cn/vant/test.pdf' },
+        { url: cdnURL('cat.jpeg') },
+        { url: cdnURL('test.pdf') },
         { file: mockFile },
       ],
     },
@@ -307,7 +309,7 @@ test('image-fit prop', () => {
   const wrapper = mount(Uploader, {
     props: {
       imageFit: 'contain',
-      modelValue: [{ url: 'https://img.yzcdn.cn/vant/cat.jpeg' }],
+      modelValue: [{ url: cdnURL('cat.jpeg') }],
     },
   });
 
@@ -358,16 +360,38 @@ test('max-count prop', async () => {
   ).toHaveLength(1);
 });
 
-test('preview-size prop', async () => {
+test('should allow to custom size by preview-size prop', async () => {
   const wrapper = mount(Uploader, {
     props: {
-      modelValue: [],
+      modelValue: [{ file: mockFile }],
       previewSize: 30,
     },
   });
 
-  await wrapper.setProps({ modelValue: [{ file: mockFile }] });
-  expect(wrapper.html()).toMatchSnapshot();
+  const image = wrapper.find('.van-uploader__file');
+  expect(image.style.width).toEqual('30px');
+  expect(image.style.height).toEqual('30px');
+
+  const upload = wrapper.find('.van-uploader__upload');
+  expect(upload.style.width).toEqual('30px');
+  expect(upload.style.height).toEqual('30px');
+});
+
+test('should allow to set width and height separately by preview-size prop', async () => {
+  const wrapper = mount(Uploader, {
+    props: {
+      modelValue: [{ file: mockFile }],
+      previewSize: [20, 10],
+    },
+  });
+
+  const image = wrapper.find('.van-uploader__file');
+  expect(image.style.width).toEqual('20px');
+  expect(image.style.height).toEqual('10px');
+
+  const upload = wrapper.find('.van-uploader__upload');
+  expect(upload.style.width).toEqual('20px');
+  expect(upload.style.height).toEqual('10px');
 });
 
 test('deletable prop', async () => {
@@ -541,7 +565,7 @@ test('close-preview event', async () => {
   });
 
   await later();
-  wrapper.find('.van-image').trigger('click');
+  await wrapper.find('.van-image').trigger('click');
 
   const preview = document.querySelector<HTMLDivElement>('.van-image-preview');
   const swipe = preview?.querySelector<HTMLDivElement>(
@@ -603,17 +627,32 @@ test('multiFile upload filter max-size file', async () => {
   expect(wrapper.emitted<[File]>('oversize')![0]).toBeTruthy();
 });
 
-test('preview-cover slot', async () => {
+test('should render preview-cover slot correctly', async () => {
   const wrapper = mount(Uploader, {
     props: {
-      modelValue: [{ url: IMAGE }, { url: IMAGE }],
+      modelValue: [{ url: IMAGE }],
     },
     slots: {
       'preview-cover': 'Custom Preview Cover',
     },
   });
 
-  expect(wrapper.html()).toMatchSnapshot();
+  expect(wrapper.find('.van-uploader__preview-cover').html()).toMatchSnapshot();
+});
+
+test('should render preview-delete slot correctly', async () => {
+  const wrapper = mount(Uploader, {
+    props: {
+      modelValue: [{ url: IMAGE }],
+    },
+    slots: {
+      'preview-delete': 'Custom Preview Delete',
+    },
+  });
+
+  expect(
+    wrapper.find('.van-uploader__preview-delete').html()
+  ).toMatchSnapshot();
 });
 
 test('should not render upload input when using readonly prop', async () => {

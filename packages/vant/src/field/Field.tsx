@@ -16,6 +16,7 @@ import {
   isDef,
   extend,
   addUnit,
+  toArray,
   FORM_KEY,
   numericProp,
   unknownProp,
@@ -58,6 +59,7 @@ import type {
   FieldFormatTrigger,
   FieldValidateError,
   FieldAutosizeConfig,
+  FieldValidationStatus,
   FieldValidateTrigger,
   FieldFormSharedProps,
 } from './types';
@@ -80,6 +82,7 @@ export const fieldSharedProps = {
   placeholder: String,
   autocomplete: String,
   errorMessage: String,
+  enterkeyhint: String,
   clearTrigger: makeStringProp<FieldClearTrigger>('focus'),
   formatTrigger: makeStringProp<FieldFormatTrigger>('onChange'),
   error: {
@@ -133,8 +136,8 @@ export default defineComponent({
   setup(props, { emit, slots }) {
     const id = useId();
     const state = reactive({
+      status: 'unvalidated' as FieldValidationStatus,
       focused: false,
-      validateFailed: false,
       validateMessage: '',
     });
 
@@ -179,7 +182,7 @@ export default defineComponent({
       rules.reduce(
         (promise, rule) =>
           promise.then(() => {
-            if (state.validateFailed) {
+            if (state.status === 'failed') {
               return;
             }
 
@@ -190,7 +193,7 @@ export default defineComponent({
             }
 
             if (!runSyncRule(value, rule)) {
-              state.validateFailed = true;
+              state.status = 'failed';
               state.validateMessage = getRuleMessage(value, rule);
               return;
             }
@@ -198,10 +201,10 @@ export default defineComponent({
             if (rule.validator) {
               return runRuleValidator(value, rule).then((result) => {
                 if (result && typeof result === 'string') {
-                  state.validateFailed = true;
+                  state.status = 'failed';
                   state.validateMessage = result;
                 } else if (result === false) {
-                  state.validateFailed = true;
+                  state.status = 'failed';
                   state.validateMessage = getRuleMessage(value, rule);
                 }
               });
@@ -211,10 +214,8 @@ export default defineComponent({
       );
 
     const resetValidation = () => {
-      if (state.validateFailed) {
-        state.validateFailed = false;
-        state.validateMessage = '';
-      }
+      state.status = 'unvalidated';
+      state.validateMessage = '';
     };
 
     const validate = (rules = props.rules) =>
@@ -222,12 +223,13 @@ export default defineComponent({
         resetValidation();
         if (rules) {
           runRules(rules).then(() => {
-            if (state.validateFailed) {
+            if (state.status === 'failed') {
               resolve({
                 name: props.name,
                 message: state.validateMessage,
               });
             } else {
+              state.status = 'passed';
               resolve();
             }
           });
@@ -238,12 +240,12 @@ export default defineComponent({
 
     const validateWithTrigger = (trigger: FieldValidateTrigger) => {
       if (form && props.rules) {
-        const defaultTrigger = form.props.validateTrigger === trigger;
+        const { validateTrigger } = form.props;
+        const defaultTrigger = toArray(validateTrigger).includes(trigger);
         const rules = props.rules.filter((rule) => {
           if (rule.trigger) {
-            return rule.trigger === trigger;
+            return toArray(rule.trigger).includes(trigger);
           }
-
           return defaultTrigger;
         });
 
@@ -350,7 +352,7 @@ export default defineComponent({
       if (typeof props.error === 'boolean') {
         return props.error;
       }
-      if (form && form.props.showError && state.validateFailed) {
+      if (form && form.props.showError && state.status === 'failed') {
         return true;
       }
     });
@@ -382,6 +384,8 @@ export default defineComponent({
 
     const getInputId = () => props.id || `${id}-input`;
 
+    const getValidationStatus = () => state.status;
+
     const renderInput = () => {
       const controlClass = bem('control', [
         getProp('inputAlign'),
@@ -406,12 +410,12 @@ export default defineComponent({
         name: props.name,
         rows: props.rows !== undefined ? +props.rows : undefined,
         class: controlClass,
-        value: props.modelValue,
         disabled: getProp('disabled'),
         readonly: getProp('readonly'),
         autofocus: props.autofocus,
         placeholder: props.placeholder,
         autocomplete: props.autocomplete,
+        enterkeyhint: props.enterkeyhint,
         'aria-labelledby': props.label ? `${id}-label` : undefined,
         onBlur,
         onFocus,
@@ -529,6 +533,7 @@ export default defineComponent({
       validate,
       formValue,
       resetValidation,
+      getValidationStatus,
     });
 
     provide(CUSTOM_FIELD_INJECTION_KEY, {

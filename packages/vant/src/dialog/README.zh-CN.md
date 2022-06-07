@@ -156,7 +156,7 @@ export default {
 
 ```html
 <van-dialog v-model:show="show" title="标题" show-cancel-button>
-  <img src="https://img.yzcdn.cn/vant/apple-3.jpg" />
+  <img src="https://fastly.jsdelivr.net/npm/@vant/assets/apple-3.jpeg" />
 </van-dialog>
 ```
 
@@ -200,8 +200,10 @@ export default {
 | showCancelButton | 是否展示取消按钮 | _boolean_ | `false` |
 | confirmButtonText | 确认按钮文案 | _string_ | `确认` |
 | confirmButtonColor | 确认按钮颜色 | _string_ | `#ee0a24` |
+| confirmButtonDisabled `v3.5.0` | 是否禁用确认按钮 | _boolean_ | `false` |
 | cancelButtonText | 取消按钮文案 | _string_ | `取消` |
 | cancelButtonColor | 取消按钮颜色 | _string_ | `black` |
+| cancelButtonDisabled `v3.5.0` | 是否禁用取消按钮 | _boolean_ | `false` |
 | overlay | 是否展示遮罩层 | _boolean_ | `true` |
 | overlayClass | 自定义遮罩层类名 | _string \| Array \| object_ | - |
 | overlayStyle | 自定义遮罩层样式 | _object_ | - |
@@ -222,15 +224,17 @@ export default {
 | v-model:show | 是否显示弹窗 | _boolean_ | - |
 | title | 标题 | _string_ | - |
 | width | 弹窗宽度，默认单位为 `px` | _number \| string_ | `320px` |
-| message | 文本内容，支持通过 `\n` 换行 | _string \| () => JSX.ELement_ | - |
+| message | 文本内容，支持通过 `\n` 换行 | _string \| () => JSX.Element_ | - |
 | message-align | 内容水平对齐方式，可选值为 `left` `right` | _string_ | `center` |
 | theme | 样式风格，可选值为 `round-button` | _string_ | `default` |
 | show-confirm-button | 是否展示确认按钮 | _boolean_ | `true` |
 | show-cancel-button | 是否展示取消按钮 | _boolean_ | `false` |
 | confirm-button-text | 确认按钮文案 | _string_ | `确认` |
 | confirm-button-color | 确认按钮颜色 | _string_ | `#ee0a24` |
+| confirm-button-disabled `v3.5.0` | 是否禁用确认按钮 | _boolean_ | `false` |
 | cancel-button-text | 取消按钮文案 | _string_ | `取消` |
 | cancel-button-color | 取消按钮颜色 | _string_ | `black` |
+| cancel-button-disabled `v3.5.0` | 是否禁用取消按钮 | _boolean_ | `false` |
 | overlay | 是否展示遮罩层 | _boolean_ | `true` |
 | overlay-class | 自定义遮罩层类名 | _string_ | - |
 | overlay-style | 自定义遮罩层样式 | _object_ | - |
